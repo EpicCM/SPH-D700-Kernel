@@ -1,0 +1,142 @@
+/*
+LIBDEF( lIndex,	fIndex,	name,				parNum,	conv,						func )	
+*/
+/*	Lang library */
+LIBDEF( 0,		0,		"abs",				1,		CONV_INT_OR_FLOAT_UNARY,	ncs_libLangAbs )
+LIBDEF( 0,		1,		"min",				2,		CONV_INT_OR_FLOAT_BINARY,	ncs_libLangMin )
+LIBDEF( 0,		2,		"max",				2,		CONV_INT_OR_FLOAT_BINARY,	ncs_libLangMax )
+LIBDEF( 0,		3,		"parseInt",			1,		CONV_STRING,				ncs_libLangParseInt )
+LIBDEF( 0,		4,		"parseFloat",		1,		CONV_STRING,				ncs_libLangParseFloat )
+LIBDEF( 0,		5,		"isInt",			1,		CONV_STRING,				ncs_libLangIsInt )
+LIBDEF( 0,		6,		"isFloat",			1,		CONV_STRING,				ncs_libLangIsFloat )
+LIBDEF( 0,		7,		"maxInt",			0,		CONV_NO_CONVERSION,			ncs_libLangMaxInt )
+LIBDEF( 0,		8,		"minInt",			0,		CONV_NO_CONVERSION,			ncs_libLangMinInt )
+LIBDEF( 0,		9,		"float",			0,		CONV_NO_CONVERSION,			ncs_libLangFloat )
+LIBDEF( 0,		10,		"exit",				1,		CONV_NO_CONVERSION,			ncs_libLangExit )
+LIBDEF( 0,		11,		"abort",			1,		CONV_STRING,				ncs_libLangAbort )
+LIBDEF( 0,		12,		"random",			1,		CONV_INT_OR_FLOAT_UNARY,	ncs_libLangRandom )
+LIBDEF( 0,		13,		"seed",				1,		CONV_INT_OR_FLOAT_UNARY,	ncs_libLangSeed )
+LIBDEF( 0,		14,		"characterSet",		0,		CONV_NO_CONVERSION,			ncs_libLangCharacterSet )
+
+/*  FLoat library */
+LIBDEF( 1,		0,		"int",				1,		CONV_INT_OR_FLOAT_UNARY,	ncs_libFloatInt )
+LIBDEF( 1,		1,		"floor",			1,		CONV_INT_OR_FLOAT_UNARY,	ncs_libFloatFloor )
+LIBDEF( 1,		2,		"ceil",				1,		CONV_INT_OR_FLOAT_UNARY,	ncs_libFloatCeil )
+LIBDEF( 1,		3,		"pow",				2,		CONV_FLOAT,					ncs_libFloatPow )
+LIBDEF( 1,		4,		"round",			1,		CONV_INT_OR_FLOAT_UNARY,	ncs_libFloatRound )
+LIBDEF( 1,		5,		"sqrt",				1,		CONV_FLOAT,					ncs_libFloatSqrt )
+LIBDEF( 1,		6,		"maxFloat",			0,		CONV_NO_CONVERSION,			ncs_libFloatMaxFloat )
+LIBDEF( 1,		7,		"minFloat",			0,		CONV_NO_CONVERSION,			ncs_libFloatMinFloat )
+
+/*  String Library */
+LIBDEF( 2,		0,		"length",			1,		CONV_STRING,				ncs_libStringLength )
+LIBDEF( 2,		1,		"isEmpty",			1,		CONV_STRING,				ncs_libStringIsEmpty )
+LIBDEF( 2,		2,		"charAt",			2,		CONV_NOT_SUPPORTED,			ncs_libStringCharAt )
+LIBDEF( 2,		3,		"subString",		3,		CONV_NOT_SUPPORTED,			ncs_libStringSubString )
+LIBDEF( 2,		4,		"find",				2,		CONV_STRING,				ncs_libStringFind )
+LIBDEF( 2,		5,		"replace",			3,		CONV_STRING,				ncs_libStringReplace )
+LIBDEF( 2,		6,		"elements",			2,		CONV_STRING,				ncs_libStringElements )
+LIBDEF( 2,		7,		"elementAt",		3,		CONV_NOT_SUPPORTED,			ncs_libStringElementAt )
+LIBDEF( 2,		8,		"removeAt",			3,		CONV_NOT_SUPPORTED,			ncs_libStringRemoveAt )
+LIBDEF( 2,		9,		"replaceAt",		4,		CONV_NOT_SUPPORTED,			ncs_libStringReplaceAt )
+LIBDEF( 2,		10,		"insertAt",			4,		CONV_NOT_SUPPORTED,			ncs_libStringInsertAt )
+LIBDEF( 2,		11,		"squeeze",			1,		CONV_STRING,				ncs_libStringSqueeze )
+LIBDEF( 2,		12,		"trim",				1,		CONV_STRING,				ncs_libStringTrim )
+LIBDEF( 2,		13,		"compare",			2,		CONV_STRING,				ncs_libStringCompare )
+LIBDEF( 2,		14,		"toString",			1,		CONV_STRING,				ncs_libStringToString )
+LIBDEF( 2,		15,		"format",			2,		CONV_NOT_SUPPORTED,			ncs_libStringFormat )
+
+/*  URL Library */
+LIBDEF( 3,		0,		"isValid",			1,		CONV_STRING,				ncs_libURLIsValid )
+LIBDEF( 3,		1,		"getScheme",		1,		CONV_STRING,				ncs_libURLGetScheme )
+LIBDEF( 3,		2,		"getHost",			1,		CONV_STRING,				ncs_libURLGetHost )
+LIBDEF( 3,		3,		"getPort",			1,		CONV_STRING,				ncs_libURLGetPort )
+LIBDEF( 3,		4,		"getPath",			1,		CONV_STRING,				ncs_libURLGetPath )
+LIBDEF( 3,		5,		"getParameters",	1,		CONV_STRING,				ncs_libURLGetParameters )
+LIBDEF( 3,		6,		"getQuery",			1,		CONV_STRING,				ncs_libURLGetQuery )
+LIBDEF( 3,		7,		"getFragment",		1,		CONV_STRING,				ncs_libURLGetFragment )
+LIBDEF( 3,		8,		"getBase",			0,		CONV_NO_CONVERSION,			ncs_libURLGetBase )
+LIBDEF( 3,		9,		"getReferer",		0,		CONV_NO_CONVERSION,			ncs_libURLGetReferer )
+LIBDEF( 3,		10,		"resolve",			2,		CONV_STRING,				ncs_libURLResolve )
+LIBDEF( 3,		11,		"escapeString",		1,		CONV_STRING,				ncs_libURLEscapeString )
+LIBDEF( 3,		12,		"unescapeString",	1,		CONV_STRING,				ncs_libURLUnEscapeString )
+LIBDEF( 3,		13,		"loadString",		2,		CONV_STRING,				ncs_libURLLoadString )
+
+/*  WMLBrowser Library */
+LIBDEF( 4,		0,		"getVar",			1,		CONV_STRING,				ncs_libWMLBrowserGetVar )
+LIBDEF( 4,		1,		"setVar",			2,		CONV_STRING,				ncs_libWMLBrowserSetVar )
+LIBDEF( 4,		2,		"go",				1,		CONV_STRING,				ncs_libWMLBrowserGo )
+LIBDEF( 4,		3,		"prev",				0,		CONV_NO_CONVERSION,			ncs_libWMLBrowserPrev )
+LIBDEF( 4,		4,		"newContext",		0,		CONV_NO_CONVERSION,			ncs_libWMLBrowserNewContext )
+LIBDEF( 4,		5,		"getCurrentCard",	0,		CONV_NO_CONVERSION,			ncs_libWMLBrowserGetCurrentCard )
+LIBDEF( 4,		6,		"refresh",			0,		CONV_NO_CONVERSION,			ncs_libWMLBrowserRefresh )
+
+/*  Dialogs Library */
+LIBDEF( 5,		0,		"prompt",			2,		CONV_STRING,				ncs_libDialogPrompt )
+LIBDEF( 5,		1,		"confirm",			3,		CONV_NOT_SUPPORTED,			ncs_libDialogConfirm )
+LIBDEF( 5,		2,		"alert",			1,		CONV_STRING,				ncs_libDialogAlert )
+
+#if defined(_SMB_CRYPTO_LIBRARY)
+LIBDEF( 6,		0,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		1,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		2,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		3,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		4,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		5,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		6,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		7,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		8,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		9,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		10,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		11,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		12,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		13,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		14,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		15,		"not_supported",			0,		CONV_NOT_SUPPORTED,			NULL )
+LIBDEF( 6,		16,		"signText",				4,		CONV_NOT_SUPPORTED,			ncs_libCryptoSignText )
+#endif /*_SMB_CRYPTO_LIBRARY*/
+
+#if defined(_SMB2_WAP_WTA)
+/*  WTA Public Library */
+LIBDEF( 6,	0,		"makeCall",			1,		CONV_STRING,				ncs_libWTAPublicMakeCall )
+LIBDEF( 6,	1,		"sendDTMF",			1,		CONV_STRING,				ncs_libWTAPublicSendDTMF )
+LIBDEF( 6,	2,		"addPBEntry",		2,		CONV_STRING,				ncs_libWTAPublicAddPBEntry )
+
+#if 0
+/*  WTA VoiceCall Library */
+LIBDEF( 513,	0,		"setup",			2,		CONV_NOT_SUPPORTED,			WtaVoiceCallSetup )
+LIBDEF( 513,	1,		"accept",			2,		CONV_NOT_SUPPORTED,			WtaVoiceCallAccept )
+LIBDEF( 513,	2,		"release",			1,		CONV_NOT_SUPPORTED,			WtaVoiceCallRelease )
+LIBDEF( 513,	3,		"sendDTMF",			2,		CONV_NOT_SUPPORTED,			WtaVoiceCallSendDTMF )
+LIBDEF( 513,	4,		"callStatus",		2,		CONV_NOT_SUPPORTED,			WtaVoiceCallGetStatus )
+LIBDEF( 513,	5,		"list",				1,		CONV_BOOL,					WtaVoiceCallList )
+
+/*  WTA NetText Library */
+LIBDEF( 514,	0,		"send",				2,		CONV_STRING,				WtaNetTextSend )
+LIBDEF( 514,	1,		"list",				2,		CONV_NOT_SUPPORTED,			WtaNetTextList )
+LIBDEF( 514,	2,		"remove",			1,		CONV_NOT_SUPPORTED,			WtaNetTextRemove )
+LIBDEF( 514,	3,		"getFieldValue",	2,		CONV_NOT_SUPPORTED,			WtaNetTextGetFieldValue )
+LIBDEF( 514,	4,		"markAsRead",		1,		CONV_NOT_SUPPORTED,			WtaNetTextMarkAsRead )
+
+/*  WTA PhoneBook Library */
+LIBDEF( 515,	0,		"write",			2,		CONV_NOT_SUPPORTED,			WtaPhonebookWrite )
+LIBDEF( 515,	1,		"search",			2,		CONV_STRING,				WtaPhonebookSearch )
+LIBDEF( 515,	2,		"remove",			1,		CONV_INT,					WtaPhonebookRemove )
+LIBDEF( 515,	3,		"getFieldValue",	2,		CONV_NOT_SUPPORTED,			WtaPhonebookGetFieldValue )
+LIBDEF( 515,	4,		"change",			3,		CONV_NOT_SUPPORTED,			WtaPhonebookChange )
+
+/*  WTA CallLog Library */
+LIBDEF( 519,	0,		"dialled",			1,		CONV_BOOL,					WtaCallLogDialled )
+LIBDEF( 519,	1,		"missed",			1,		CONV_BOOL,					WtaCallLogMissed )
+LIBDEF( 519,	2,		"received",			1,		CONV_BOOL,					WtaCallLogReceived )
+LIBDEF( 519,	3,		"getFieldValue",	2,		CONV_NOT_SUPPORTED,			WtaCallLogGetFieldValue )
+
+/*  WTA Misc Library */
+LIBDEF( 516,	0,		"setIndicator",		2,		CONV_INT,					WtaMiscSetIndicator )
+LIBDEF( 516,	1,		"endContext",		0,		CONV_NO_CONVERSION,			WtaMiscEndContext )
+LIBDEF( 516,	2,		"getProtection",	0,		CONV_NO_CONVERSION,			WtaMiscGetProtect )
+LIBDEF( 516,	3,		"setProtection",	1,		CONV_BOOL,					WtaMiscSetProtect )
+#endif // #if 0
+#endif // defined(_SMB2_WAP_WTA) && defined(_SHP_PROTO_WAP)
+/* End Mark */
+LIBDEF( -1,		-1,		"Not defined",		0,		CONV_NO_CONVERSION,			0 )
