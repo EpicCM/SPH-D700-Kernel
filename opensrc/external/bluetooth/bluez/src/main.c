@@ -59,6 +59,8 @@
 #include "dbus-common.h"
 #include "agent.h"
 #include "manager.h"
+#include <private/android_filesystem_config.h>//SecFeature SPRINT shiks_DI18
+
 
 #define LAST_ADAPTER_EXIT_TIMEOUT 30
 
@@ -364,6 +366,18 @@ static GOptionEntry options[] = {
 #ifdef BT_ALT_STACK
 int main(int argc, char *argv[])
 {
+//shiks_DI13 start
+system("/system/bin/chown bluetooth /data/misc/bluetoothd/*");  //SecFeature SPRINT shiks_DI18
+system("/system/bin/chown bluetooth /data/misc/bluetoothd/*/*");//SecFeature SPRINT shiks_DI18
+
+#ifdef ANDROID_SET_AID_AND_CAP
+   	/* Unfortunately Android's init.rc does not yet support applying
+   	 * capabilities. So we must do it in-process. */
+   	void *android_set_aid_and_cap(void);
+   	android_set_aid_and_cap();
+#endif
+//shiks_DI13 end
+
     init_defaults();
 
     dtun_client_main();
