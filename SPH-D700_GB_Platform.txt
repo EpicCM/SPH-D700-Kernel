@@ -1,0 +1,21 @@
+How to build
+
+1. Get android open source.
+    : version info - Android gingerbread 2.3.5(r1)
+    ( Download site : http://source.android.com )
+
+2. Overwrite modules that you want to build.
+ - \external\iproute2 : Write "ip \" into "build\core\user_tags.mk" so that add this module.
+ - \external\webkit  : Delete this source tree at Android gingerbread and then copy & execute "clean build".
+ - \external\alsa-lib : Write "libasound \" into "build\core\user_tags.mk" so that add this module.
+
+3. Add the following lines at the end of build/target/board/generic/BoardConfig.mk
+
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_BCM := true
+BT_ALT_STACK := true
+BRCM_BT_USE_BTL_IF := true
+BRCM_BTL_INCLUDE_A2DP := true
+BOARD_USES_ALSA_AUDIO := true
+
+4. make

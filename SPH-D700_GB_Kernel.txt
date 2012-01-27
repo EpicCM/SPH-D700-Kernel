@@ -1,0 +1,16 @@
+HOW TO BUILD KERNEL 2.6.35 FOR SDH-D700_NA_SPR
+
+1. Visit http://www.codesourcery.com/, download and install Sourcery G++ Lite 2009q3-68 toolchain for ARM EABI.
+
+2. Compile as follow commands.
+    
+    $ make arch=arm victory_8G_defconfig 
+    $ make
+
+3. Get the zImage on follow path.
+
+    kernel/arch/arm/boot/zImage
+    	
+
+[Build Clean]
+make clean
