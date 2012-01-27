@@ -3640,7 +3640,7 @@ static int btd_adapter_authorize(struct btd_adapter *adapter,
 	struct agent *agent;
 	char address[18];
 	char value[PROPERTY_VALUE_MAX];	// Samsung Bluetooth feature - IT Policy
-	const gchar *dev_path;
+//	const gchar *dev_path; 	// Broadcom Bluetooth feature - CTS VERI
 	int err;
 
 	ba2str(dst, address);
@@ -3698,9 +3698,12 @@ static int btd_adapter_authorize(struct btd_adapter *adapter,
 		return -EPERM;
 	}
 
+/* Broadcom Bluetooth feature - CTS VERI
 	dev_path = device_get_path(device);
 
 	err = agent_authorize(agent, dev_path, uuid, agent_auth_cb, auth, g_free);
+*/
+	err = agent_authorize(agent, device, uuid, agent_auth_cb, auth, g_free); //CTS VER
 	if (err < 0)
 		g_free(auth);
 	else

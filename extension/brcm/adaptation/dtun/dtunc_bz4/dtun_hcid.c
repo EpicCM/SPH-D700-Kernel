@@ -1137,12 +1137,43 @@ void dtun_dm_sig_auth_comp(tDTUN_DEVICE_SIGNAL *msg)
     hcid_dbus_bonding_process_complete(&sba, &msg->auth_comp.info.bd_addr, st);
 
 }
+//CTS VERI START
+static void dtun_dm_io_cap_req (tDTUN_DEVICE_SIGNAL *msg)
+{
+    struct btd_adapter *adapter;
+    struct btd_device *device;
 
+    if (!get_adapter_and_device(&sba, &msg->io_cap_req.info.bd_addr,
+         &adapter, &device, FALSE)) {
+        error( "%s: get_adapter_and_device failed", __FUNCTION__);
+        return;
+    }
+
+    info("dtun_dm_io_cap_req bd_addr = %02x:%02x:%02x:%02x:%02x:%02x:", 
+        msg->io_cap_req.info.bd_addr.b[0],msg->io_cap_req.info.bd_addr.b[1],msg->io_cap_req.info.bd_addr.b[2],
+        msg->io_cap_req.info.bd_addr.b[3],msg->io_cap_req.info.bd_addr.b[4],msg->io_cap_req.info.bd_addr.b[5]);
+    info("dtun_dm_io_cap_req: auth_req: 0x%x", msg->io_cap_req.info.loc_auth);
+
+    device_set_loc_auth (device, msg->io_cap_req.info.loc_auth);
+}
+
+static void dtun_dm_io_cap_rsp (tDTUN_DEVICE_SIGNAL *msg)
+{
+    info("dtun_dm_io_cap_rsp bd_addr = %02x:%02x:%02x:%02x:%02x:%02x:", 
+        msg->io_cap_rsp.info.bd_addr.b[0],msg->io_cap_rsp.info.bd_addr.b[1],msg->io_cap_rsp.info.bd_addr.b[2],
+        msg->io_cap_rsp.info.bd_addr.b[3],msg->io_cap_rsp.info.bd_addr.b[4],msg->io_cap_rsp.info.bd_addr.b[5]);
+    info("dtun_dm_io_cap_rsp: io_cap: 0x%x auth_req: 0x%x", msg->io_cap_rsp.info.io_cap, msg->io_cap_rsp.info.auth_req);
+
+    hcid_dbus_set_io_cap(&sba, &msg->io_cap_rsp.info.bd_addr, msg->io_cap_rsp.info.io_cap, msg->io_cap_rsp.info.auth_req);
+}
+//CTS VERI END
 static void dtun_dm_sig_ssp_cfm_req(tDTUN_DEVICE_SIGNAL *msg)
 {
     unsigned long ssp_pin;
     unsigned long ssp_mode;
     uint32_t cur_cod = 0;
+    struct btd_adapter *adapter; //CTS VERI
+    struct btd_device *device;   //CTS VERI
 
     PRINTFUNC();
 
@@ -1165,11 +1196,39 @@ static void dtun_dm_sig_ssp_cfm_req(tDTUN_DEVICE_SIGNAL *msg)
      if(msg->ssp_cfm_req.info.just_work == true)
          ssp_pin = 0x80000000; //This is used as Bluetooth.Error in the JAVA space
 	 
+     //CTS VERI START
+     if (!get_adapter_and_device(&sba, &msg->io_cap_req.info.bd_addr,
+              &adapter, &device, FALSE)) {
+          error( "%s: get_adapter_and_device failed", __FUNCTION__);
+     }
+     else
+     {
+          info ("%s: loc_auth_req: %d, rmt_auth_req: %d", __FUNCTION__, msg->ssp_cfm_req.info.loc_auth_req, msg->ssp_cfm_req.info.rmt_auth_req);
+          device_set_loc_auth(device, msg->ssp_cfm_req.info.loc_auth_req);
+          device_set_auth(device, msg->ssp_cfm_req.info.rmt_auth_req);
+     }
+     //CTS VERI END
      hcid_dbus_user_confirm(&sba, &msg->ssp_cfm_req.info.bd_addr, ssp_pin);     /* Java side is 2 for just work */
 
     return;
 }
 
+static void dtun_dm_sig_ssp_key_notif(tDTUN_DEVICE_SIGNAL *msg)
+{
+    unsigned long ssp_passkey;
+
+    PRINTFUNC();
+
+    write_remote_class(&sba, &msg->ssp_key_notif.info.bd_addr, msg->ssp_key_notif.info.cod);
+
+    ssp_passkey = msg->ssp_key_notif.info.pass_key;
+
+    info( "Just Works = false");
+
+    hcid_dbus_user_notify(&sba, &msg->ssp_key_notif.info.bd_addr, ssp_passkey);     /* Java side is 2 for just work */
+
+    return;
+}
 
 /* return testmode state to callee */
 static void dtun_dm_sig_testmode_state( tDTUN_DEVICE_SIGNAL *msg )
@@ -1924,8 +1983,11 @@ const tDTUN_SIGNAL dtun_signal_tbl[] =
     dtun_dm_sig_pin_req,
     dtun_dm_sig_authorize_req,
     dtun_dm_sig_auth_comp,
+    dtun_dm_io_cap_req, //CTS VERI
+    dtun_dm_io_cap_rsp, //CTS VERI
     dtun_dm_sig_link_down,
     dtun_dm_sig_ssp_cfm_req,
+    dtun_dm_sig_ssp_key_notif,
     dtun_dm_sig_link_up,
     dtun_dm_sig_sdp_handle,    
     dtun_dm_sig_testmode_state,

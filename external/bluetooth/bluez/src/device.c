@@ -140,6 +140,9 @@ struct btd_device {
 	/* For Secure Simple Pairing */
 	uint8_t		cap;
 	uint8_t		auth;
+#ifdef BT_ALT_STACK //CTS VERI
+    uint8_t     loc_auth;       /* local auth requirements */
+#endif
 
 	uint16_t	handle;			/* Connection handle */
 
@@ -2207,6 +2210,7 @@ void device_set_cap(struct btd_device *device, uint8_t cap)
 		return;
 
 	device->cap = cap;
+	error("%s: device cap: %x", __FUNCTION__, device->cap);//CTS VERI
 }
 
 uint8_t device_get_cap(struct btd_device *device)
@@ -2220,13 +2224,35 @@ void device_set_auth(struct btd_device *device, uint8_t auth)
 		return;
 
 	device->auth = auth;
+	error("%s: device auth: %x", __FUNCTION__, device->auth);//CTS VERI
 }
 
 uint8_t device_get_auth(struct btd_device *device)
 {
 	return device->auth;
 }
+//CTS VERI START
+void device_set_loc_auth(struct btd_device *device, uint8_t loc_auth)
+{
+    if (!device)
+        return;
 
+#ifdef BT_ALT_STACK
+    device->loc_auth = loc_auth;
+    error("%s: loc_auth: %x", __FUNCTION__, device->loc_auth);
+#endif
+}
+
+uint8_t device_get_loc_auth(struct btd_device *device)
+{
+#ifdef BT_ALT_STACK
+    error("%s: loc_auth: %x", __FUNCTION__, device->loc_auth);
+    return device->loc_auth;
+#else
+    return 0;
+#endif
+}
+//CTS VERI END
 static gboolean start_discovery(gpointer user_data)
 {
 	struct btd_device *device = user_data;
@@ -2853,7 +2879,7 @@ int device_request_authentication(struct btd_device *device, auth_type_t type,
 	struct agent *agent;
 	int err;
 
-	DBG("%s: requesting agent authentication", device->path);
+	error("%s: requesting agent authentication type %d", device->path, type);
 
 	agent = device_get_agent(device);
 	if (!agent) {

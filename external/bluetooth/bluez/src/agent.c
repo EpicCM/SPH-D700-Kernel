@@ -304,10 +304,13 @@ done:
 }
 
 static int agent_call_authorize(struct agent_request *req,
-				const char *device_path,
+//				const char *device_path,
+				const struct btd_device *device, //CTS VERI
 				const char *uuid)
 {
 	struct agent *agent = req->agent;
+        const gchar *device_path = device_get_path(device); //CTS VERI
+        gboolean bTemporary = device_is_temporary(device);   //CTS VERI
 
 	req->msg = dbus_message_new_method_call(agent->name, agent->path,
 				"org.bluez.Agent", "Authorize");
@@ -319,6 +322,7 @@ static int agent_call_authorize(struct agent_request *req,
 	dbus_message_append_args(req->msg,
 				DBUS_TYPE_OBJECT_PATH, &device_path,
 				DBUS_TYPE_STRING, &uuid,
+                                DBUS_TYPE_BOOLEAN, &bTemporary, //CTS VERI
 				DBUS_TYPE_INVALID);
 
 	if (dbus_connection_send_with_reply(connection, req->msg,
@@ -336,7 +340,8 @@ static int agent_call_authorize(struct agent_request *req,
 }
 
 int agent_authorize(struct agent *agent,
-			const char *path,
+//			const char *path,
+			const struct btd_device *device, //CTS VERI
 			const char *uuid,
 			agent_cb cb,
 			void *user_data,
@@ -351,7 +356,8 @@ int agent_authorize(struct agent *agent,
 	req = agent_request_new(agent, AGENT_REQUEST_AUTHORIZE, cb,
 							user_data, destroy);
 
-	err = agent_call_authorize(req, path, uuid);
+//	err = agent_call_authorize(req, path, uuid);
+	err = agent_call_authorize(req, device, uuid); //Broadocm Bluetooth feature - CTS VERI
 	if (err < 0) {
 		agent_request_free(req, FALSE);
 		return -ENOMEM;
@@ -359,7 +365,8 @@ int agent_authorize(struct agent *agent,
 
 	agent->request = req;
 
-	DBG("authorize request was sent for %s", path);
+//	DBG("authorize request was sent for %s", path);
+	DBG("authorize request was sent for %s", device_get_path(device)); //Broadocm Bluetooth feature - CTS VERI
 
 	return 0;
 }

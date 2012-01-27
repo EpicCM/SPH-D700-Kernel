@@ -46,7 +46,8 @@ struct agent *agent_create(struct btd_adapter *adapter, const char *name,
 
 void agent_free(struct agent *agent);
 
-int agent_authorize(struct agent *agent, const char *path,
+//int agent_authorize(struct agent *agent, const char *path,
+int agent_authorize(struct agent *agent, const struct btd_device *device, //Broadocm Bluetooth feature - CTS VERI
 			const char *uuid, agent_cb cb, void *user_data,
 			GDestroyNotify destroy);
 

@@ -140,8 +140,13 @@ typedef enum {
     DTUN_SIG_DM_PIN_REQ,
     DTUN_SIG_DM_AUTHORIZE_REQ,
     DTUN_SIG_DM_AUTH_COMP,
+    //CTS VERI START
+    DTUN_SIG_DM_IO_CAP_REQ,
+    DTUN_SIG_DM_IO_CAP_RSP,
+    //CTS VERI END
     DTUN_SIG_DM_LINK_DOWN,
     DTUN_SIG_DM_SSP_CFM_REQ,
+    DTUN_SIG_DM_SSP_KEY_NOTIF,
     DTUN_SIG_DM_LINK_UP,
     DTUN_SIG_DM_SDP_REC_HANDLE,
     DTUN_SIG_DM_TESTMODE_STATE,
@@ -610,9 +615,34 @@ typedef struct
     tDTUN_AUTH_COMP_INFO info;
 
 } tDTUN_SIG_DM_AUTH_COMP;
+//CTS VERI START
+typedef struct
+{
+    bdaddr_t            bd_addr;            /* BD address peer device. */
+    uint8_t             io_cap;             /* IO Capabilities */
+    uint8_t             oob_data;           /* OOB Data */
+    uint8_t             loc_auth;           /* Auth Requirements */
+} tDTUN_SIG_DM_IO_CAP_REQ_INFO;
 
+typedef struct
+{
+    tDTUN_HDR           hdr;
+    tDTUN_SIG_DM_IO_CAP_REQ_INFO info;
+} tDTUN_SIG_DM_IO_CAP_REQ;
 
+typedef struct
+{
+    bdaddr_t            bd_addr;            /* BD address peer device. */
+    uint8_t             io_cap;             /* IO Capabilities */
+    uint8_t             auth_req;           /* Auth Requirements */
+} tDTUN_SIG_DM_IO_CAP_RSP_INFO;
 
+typedef struct
+{
+    tDTUN_HDR           hdr;
+    tDTUN_SIG_DM_IO_CAP_RSP_INFO info;
+} tDTUN_SIG_DM_IO_CAP_RSP;
+//CTS VERI END
 typedef struct
 {
     bdaddr_t            bd_addr;        /* BD address peer device. */
@@ -679,6 +709,10 @@ typedef struct
     uint32_t                cod;   /* peer CoD  */
     uint32_t            num_value;   /* Numeric value for comparision. If just works, do not show this number to UI */
     boolean             just_work;   /* TRUE, if "Just Works association model */
+    //CTS VERI START
+    uint8_t             loc_auth_req; /* local auth requirements. This can be updated, thru upgrade link key */
+    uint8_t             rmt_auth_req; /* remote auth requirements */
+    //CTS VERI END
     /* parameters ? */
 } tDTUN_SIG_SSP_CFM_REQ_INFO;
 
@@ -689,6 +723,24 @@ typedef struct
     tDTUN_SIG_SSP_CFM_REQ_INFO info;
     /* parameters ? */
 } tDTUN_SIG_SSP_CFM_REQ;
+
+/* Data type for DTUN_SIG_SSP_KEY_NOTIF*/
+typedef struct
+{
+    /* parameters */
+    bdaddr_t            bd_addr;          /* peer device BT address */
+    uint32_t                cod;   /* peer CoD  */
+    uint32_t            pass_key;   /* Passkey received and to be shown to UI */
+    /* parameters ? */
+} tDTUN_SIG_SSP_KEY_NOTIF_INFO;
+
+typedef struct
+{
+    tDTUN_HDR           hdr;
+
+    tDTUN_SIG_SSP_KEY_NOTIF_INFO info;
+    /* parameters ? */
+} tDTUN_SIG_SSP_KEY_NOTIF;
 
 /* data type for DTUN_SIG_DM_TESTMODE_STATE */
 typedef struct
@@ -996,8 +1048,13 @@ typedef union
     tDTUN_SIG_DM_PIN_REQ              pin_req;
     tDTUN_SIG_DM_AUTHORIZE_REQ        authorize_req;
     tDTUN_SIG_DM_AUTH_COMP            auth_comp;
+    //CTS VERI START
+    tDTUN_SIG_DM_IO_CAP_REQ           io_cap_req;
+    tDTUN_SIG_DM_IO_CAP_RSP           io_cap_rsp;
+    //CTS VERI
     tDTUN_SIG_DM_LINK_DOWN            link_down;
     tDTUN_SIG_SSP_CFM_REQ             ssp_cfm_req;
+    tDTUN_SIG_SSP_KEY_NOTIF           ssp_key_notif;
     tDTUN_SIG_DM_TESTMODE_STATE       testmode_state;
     tDTUN_SIG_DM_FETCH_REMOTE_DI_INFO fetch_remote_di_info;
     tDTUN_SIG_DM_FETCH_REMOTE_DI_REC  fetch_remote_di_rec;

@@ -1,7 +1,7 @@
 How to build
 
 1. Get android open source.
-    : version info - Android gingerbread 2.3.5(r1)
+    : version info - Android gingerbread 2.3.6(r1)
     ( Download site : http://source.android.com )
 
 2. Overwrite modules that you want to build.
@@ -18,4 +18,4 @@ BRCM_BT_USE_BTL_IF := true
 BRCM_BTL_INCLUDE_A2DP := true
 BOARD_USES_ALSA_AUDIO := true
 
-4. make
+4. make -j16 PRODUCT-generic-user

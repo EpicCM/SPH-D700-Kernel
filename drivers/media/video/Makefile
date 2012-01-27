@@ -76,10 +76,14 @@ obj-$(CONFIG_VIDEO_MT9V011) += mt9v011.o
 
 ifeq ($(TARGET_PRODUCT),SCH-I500)
 obj-$(CONFIG_VIDEO_CE147) += ce147-atlas.o
-else ifeq ($(TARGET_PRODUCT),SCH-R910)
-obj-$(CONFIG_VIDEO_CE147) +=ce147-forte.o
 else ifeq ($(TARGET_PRODUCT),SCH-I500R)
 obj-$(CONFIG_VIDEO_CE147) += ce147-atlas.o
+else ifeq ($(TARGET_PRODUCT),SCH-I500ACG)
+obj-$(CONFIG_VIDEO_CE147) += ce147-atlas.o
+else ifeq ($(TARGET_PRODUCT),SCH-I500CS)
+obj-$(CONFIG_VIDEO_CE147) += ce147-atlas.o
+else ifeq ($(TARGET_PRODUCT),SCH-R910)
+obj-$(CONFIG_VIDEO_CE147) +=ce147-forte.o
 else ifeq ($(TARGET_PRODUCT),SCH-I400)
 obj-$(CONFIG_VIDEO_CE147) += ce147-garnett.o
 else ifeq ($(TARGET_PRODUCT),SPH-D700)
