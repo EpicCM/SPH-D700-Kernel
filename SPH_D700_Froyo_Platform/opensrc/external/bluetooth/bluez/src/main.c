@@ -387,6 +387,9 @@ static void bt_deviceinfo_chown(void)
 			continue;
 		}
 		sprintf(pathname, "%s/%s", "/data/misc/bluetoothd", de->d_name);
+//SecFeature shiks_EA06 for BT permission from Eclair to Froyo start
+        chown(pathname, AID_BLUETOOTH, AID_BLUETOOTH);
+//SecFeature shiks_EA06 for BT permission from Eclair to Froyo end
 
 		dpath = opendir(pathname);
 		if(dpath == 0) return;
